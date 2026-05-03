@@ -22,24 +22,21 @@ Modern 3D Interior Design Tool with Cloud Sync & Auth
 - Node.js (v14+)
 - MongoDB (Running locally or on Atlas)
 
-### 2. Backend Setup
-```bash
-cd backend
-npm install
-# Create a .env file (copy from .env.example)
-cp .env.example .env
-npm run dev
-```
+## Setup & Running
+The entire platform (Frontend, Backend, and Database) can be set up and started with a single command. 
 
-### 3. Frontend & Core Setup
 From the root directory:
 ```bash
-# Use --legacy-peer-deps for NPM 7+ to handle version conflicts
-npm install --legacy-peer-deps
-./start.sh
+npm start
 ```
 
-Then visit `http://localhost:10001` in your browser.
+This will automatically:
+1. Install all dependencies (using `--legacy-peer-deps` where needed).
+2. Create your `.env` configuration file from the template.
+3. Start MongoDB, the Backend API, and the Design Editor.
+
+Once started, visit `http://localhost:10001/landing.html` in your browser.
+
 
 ## Directory Structure
 - `src/`: Core engine source code (ES6).

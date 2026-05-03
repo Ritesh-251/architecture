@@ -62,6 +62,12 @@ if [ ! -d "node_modules" ]; then
   npm install --silent
 fi
 
+# Create .env if missing
+if [ ! -f ".env" ]; then
+  echo "      Creating default .env from template..."
+  cp .env.example .env
+fi
+
 npx nodemon server.js > "$LOG_DIR/backend.log" 2>&1 &
 BACKEND_PID=$!
 sleep 2
