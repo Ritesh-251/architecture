@@ -24,7 +24,6 @@
     if (token) opts.headers['Authorization'] = 'Bearer ' + token;
     if (body) opts.body = JSON.stringify(body);
     return fetch(API_BASE + path, opts).then(function (res) {
-      console.log('[a3d] apiResponse status:', res.status);
       return res.json().then(function (data) {
         if (!res.ok) {
           console.error('[a3d] apiRequest failed:', data);

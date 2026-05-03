@@ -21,9 +21,10 @@ MONGO_CONF="/usr/local/etc/mongod.conf"
 mkdir -p "$LOG_DIR"
 
 echo ""
-echo -e "${CYAN}  ╔═══════════════════════════════════╗${RESET}"
-echo -e "${CYAN}  ║    Architect3D — Starting Up      ║${RESET}"
-echo -e "${CYAN}  ╚═══════════════════════════════════╝${RESET}"
+echo -e "${CYAN}  ╔═══════════════════════════════════╗
+  ║   Architecture Master — Starting  ║
+  ╚═══════════════════════════════════╝
+${RESET}"
 echo ""
 
 # ── 1. MongoDB ──────────────────────────────────────────────────

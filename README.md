@@ -26,16 +26,19 @@ Modern 3D Interior Design Tool with Cloud Sync & Auth
 ```bash
 cd backend
 npm install
-# Create a .env file based on the template
+# Create a .env file (copy from .env.example)
+cp .env.example .env
 npm run dev
 ```
 
-### 3. Frontend Setup
+### 3. Frontend & Core Setup
 From the root directory:
 ```bash
-npm install
-./start.sh  # This runs rollup and starts the dev server
+# Use --legacy-peer-deps for NPM 7+ to handle version conflicts
+npm install --legacy-peer-deps
+./start.sh
 ```
+
 Then visit `http://localhost:10001` in your browser.
 
 ## Directory Structure
