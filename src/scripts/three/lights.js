@@ -31,12 +31,11 @@ export class Lights extends EventDispatcher
 
 		this.dirLight.castShadow = true;
 
-		this.dirLight.shadow.mapSize.width = 1024;
-		this.dirLight.shadow.mapSize.height = 1024;
+		this.dirLight.shadow.mapSize.width = 2048;
+		this.dirLight.shadow.mapSize.height = 2048;
 
 		this.dirLight.shadow.camera.far = this.height + this.tol;
-		this.dirLight.shadow.bias = -0.0001;
-		this.dirLight.shadowDarkness = 0.2;
+		this.dirLight.shadow.bias = -0.0005;
 		this.dirLight.visible = true;
 		this.dirLight.shadowCameraVisible = false;
 

@@ -11,6 +11,7 @@ var wallPropFolder = null;
 var floorPropFolder = null;
 var cameraPropFolder = null;
 var selectionsFolder = null;
+var selectedItemForEdit = null;
 
 var myhome = '{"floorplan":{"corners":{"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2":{"x":0,"y":0,"elevation":4},"f90da5e3-9e0e-eba7-173d-eb0b071e838e":{"x":0,"y":5,"elevation":2.5},"da026c08-d76a-a944-8e7b-096b752da9ed":{"x":5,"y":5,"elevation":2.5},"4e3d65cb-54c0-0681-28bf-bddcc7bdb571":{"x":5,"y":0,"elevation":4}},"walls":[{"corner1":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","corner2":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","corner2":"da026c08-d76a-a944-8e7b-096b752da9ed","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"da026c08-d76a-a944-8e7b-096b752da9ed","corner2":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","corner2":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}}],"rooms":{"f90da5e3-9e0e-eba7-173d-eb0b071e838e,71d4f128-ae80-3d58-9bd2-711c6ce6cdf2,4e3d65cb-54c0-0681-28bf-bddcc7bdb571,da026c08-d76a-a944-8e7b-096b752da9ed":{"name":"A New Room"}},"wallTextures":[],"floorTextures":{},"newFloorTextures":{},"carbonSheet":{"url":"","transparency":1,"x":0,"y":0,"anchorX":0,"anchorY":0,"width":0.01,"height":0.01}},"items":[]}';
 var myhome1 = '{"floorplan":{"corners":{"16b020d0-fa1e-f198-bbc6-2ad1a59268d0":{"x":135.31850000000009,"y":-887.476},"8d92c038-8852-f4ea-e8bb-ac03f938f703":{"x":-44.06899999999996,"y":359.15600000000006},"5eee22b8-d773-5b93-c4c8-bf4286ac436d":{"x":-220.09100000000012,"y":-887.476},"4cd3d434-0921-ccfa-0e29-29d3778be8be":{"x":-220.09100000000012,"y":-105.15599999999995},"79dd4e37-0bc6-c662-2197-ec97c356a7d4":{"x":135.31850000000009,"y":-265.6840000000001},"e8c4dc18-0a85-92a9-85b2-37dee45f4a00":{"x":-220.09100000000012,"y":-403.85999999999984},"ea1bedfe-ca15-1744-4108-5450cc842661":{"x":-66.42100000000008,"y":-403.85999999999984},"b1c87f68-9c9e-99d2-859c-fb793355d90b":{"x":-66.42100000000008,"y":-265.6840000000001},"c8a304a1-b9bd-6b76-92e9-2321af0bd415":{"x":-44.06899999999996,"y":-105.15599999999995},"263a453c-9952-75d6-8810-8477a3265bc6":{"x":188.1505000000002,"y":-105.15599999999995},"483d787d-0016-0751-aeda-087bab3a0ed6":{"x":188.1505000000002,"y":-188.4679999999999},"e3e27b42-3226-3fe2-5153-1bbb7a498584":{"x":326.3265000000001,"y":-188.4679999999999},"22ad9451-b853-12b7-f471-9299192489e4":{"x":326.3265000000001,"y":-381.5079999999999},"3eb61572-0237-0254-1e1a-8526c2a71ec6":{"x":452.31050000000005,"y":-381.5079999999999},"1b0e7027-3dc4-12cb-0937-370a669217a5":{"x":604.52,"y":-887.476},"d326e87e-4117-7033-7844-e7486d249b1e":{"x":604.52,"y":-381.5079999999999},"4f68435b-ee33-c4cb-2b60-69945652cacd":{"x":326.3265000000001,"y":-499.36400000000003},"f0569ab9-d17a-cb83-cd6d-1ccff1b4025a":{"x":135.31850000000009,"y":-499.36400000000003},"56aa05eb-95de-2e11-d759-38814b8d9ce0":{"x":452.31050000000005,"y":-499.36400000000003},"a4c70aaa-7fcb-5c76-0308-50c45bbe10a0":{"x":604.52,"y":-499.36400000000003},"007d1f79-7d8f-827e-60ce-b3efb21444eb":{"x":604.52,"y":-105.15599999999995},"b8dc05af-4819-456f-63e1-6a975118bbb4":{"x":604.52,"y":359.15600000000006},"bf238f73-f50e-a2c6-d877-0c39e7c2c330":{"x":326.3265000000001,"y":-105.15599999999995}},"walls":[{"corner1":"4cd3d434-0921-ccfa-0e29-29d3778be8be","corner2":"c8a304a1-b9bd-6b76-92e9-2321af0bd415","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"5eee22b8-d773-5b93-c4c8-bf4286ac436d","corner2":"16b020d0-fa1e-f198-bbc6-2ad1a59268d0","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"16b020d0-fa1e-f198-bbc6-2ad1a59268d0","corner2":"1b0e7027-3dc4-12cb-0937-370a669217a5","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"16b020d0-fa1e-f198-bbc6-2ad1a59268d0","corner2":"f0569ab9-d17a-cb83-cd6d-1ccff1b4025a","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"8d92c038-8852-f4ea-e8bb-ac03f938f703","corner2":"c8a304a1-b9bd-6b76-92e9-2321af0bd415","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"8d92c038-8852-f4ea-e8bb-ac03f938f703","corner2":"b8dc05af-4819-456f-63e1-6a975118bbb4","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"4cd3d434-0921-ccfa-0e29-29d3778be8be","corner2":"e8c4dc18-0a85-92a9-85b2-37dee45f4a00","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"e8c4dc18-0a85-92a9-85b2-37dee45f4a00","corner2":"5eee22b8-d773-5b93-c4c8-bf4286ac436d","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"e8c4dc18-0a85-92a9-85b2-37dee45f4a00","corner2":"ea1bedfe-ca15-1744-4108-5450cc842661","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"ea1bedfe-ca15-1744-4108-5450cc842661","corner2":"b1c87f68-9c9e-99d2-859c-fb793355d90b","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"b1c87f68-9c9e-99d2-859c-fb793355d90b","corner2":"79dd4e37-0bc6-c662-2197-ec97c356a7d4","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"c8a304a1-b9bd-6b76-92e9-2321af0bd415","corner2":"263a453c-9952-75d6-8810-8477a3265bc6","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"263a453c-9952-75d6-8810-8477a3265bc6","corner2":"bf238f73-f50e-a2c6-d877-0c39e7c2c330","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"263a453c-9952-75d6-8810-8477a3265bc6","corner2":"483d787d-0016-0751-aeda-087bab3a0ed6","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"483d787d-0016-0751-aeda-087bab3a0ed6","corner2":"e3e27b42-3226-3fe2-5153-1bbb7a498584","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"e3e27b42-3226-3fe2-5153-1bbb7a498584","corner2":"bf238f73-f50e-a2c6-d877-0c39e7c2c330","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"007d1f79-7d8f-827e-60ce-b3efb21444eb","corner2":"d326e87e-4117-7033-7844-e7486d249b1e","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"d326e87e-4117-7033-7844-e7486d249b1e","corner2":"3eb61572-0237-0254-1e1a-8526c2a71ec6","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"22ad9451-b853-12b7-f471-9299192489e4","corner2":"e3e27b42-3226-3fe2-5153-1bbb7a498584","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"4f68435b-ee33-c4cb-2b60-69945652cacd","corner2":"22ad9451-b853-12b7-f471-9299192489e4","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"4f68435b-ee33-c4cb-2b60-69945652cacd","corner2":"56aa05eb-95de-2e11-d759-38814b8d9ce0","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"56aa05eb-95de-2e11-d759-38814b8d9ce0","corner2":"3eb61572-0237-0254-1e1a-8526c2a71ec6","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"3eb61572-0237-0254-1e1a-8526c2a71ec6","corner2":"22ad9451-b853-12b7-f471-9299192489e4","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"1b0e7027-3dc4-12cb-0937-370a669217a5","corner2":"a4c70aaa-7fcb-5c76-0308-50c45bbe10a0","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"4f68435b-ee33-c4cb-2b60-69945652cacd","corner2":"f0569ab9-d17a-cb83-cd6d-1ccff1b4025a","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"f0569ab9-d17a-cb83-cd6d-1ccff1b4025a","corner2":"79dd4e37-0bc6-c662-2197-ec97c356a7d4","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"56aa05eb-95de-2e11-d759-38814b8d9ce0","corner2":"a4c70aaa-7fcb-5c76-0308-50c45bbe10a0","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"a4c70aaa-7fcb-5c76-0308-50c45bbe10a0","corner2":"d326e87e-4117-7033-7844-e7486d249b1e","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"bf238f73-f50e-a2c6-d877-0c39e7c2c330","corner2":"007d1f79-7d8f-827e-60ce-b3efb21444eb","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300}},{"corner1":"007d1f79-7d8f-827e-60ce-b3efb21444eb","corner2":"b8dc05af-4819-456f-63e1-6a975118bbb4","frontTexture":{"url":"rooms/textures/marbletiles.jpg","stretch":false,"scale":300},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}}],"wallTextures":[],"floorTextures":{},"newFloorTextures":{}},"items":[{"item_name":"Open Door","item_type":7,"model_url":"models/js/open_door.js","xpos":45.60973158833667,"ypos":110.5,"zpos":-265.1840000000001,"rotation":0,"scale_x":1.1771369721936153,"scale_y":0.997292171703541,"scale_z":0.9994150405405762,"fixed":true},{"item_name":"Open Door","item_type":7,"model_url":"models/js/open_door.js","xpos":226.19923363943076,"ypos":110.800000297771,"zpos":-499.86400000000003,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Open Door","item_type":7,"model_url":"models/js/open_door.js","xpos":71.15100000000002,"ypos":110.5,"zpos":-104.65599999999995,"rotation":0,"scale_x":1.5695159629248197,"scale_y":0.997292171703541,"scale_z":0.9994150405405762,"fixed":true},{"item_name":"Dresser - Dark Wood","item_type":1,"model_url":"models/js/DWR_MATERA_DRESSER2.js","xpos":549.2058844807959,"ypos":57.785001860754996,"zpos":329.7799662755366,"rotation":-1.5707963267948966,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"NYC Poster","item_type":2,"model_url":"models/js/nyc-poster2.js","xpos":598.25,"ypos":183.62661902009813,"zpos":117.68045683694481,"rotation":-1.5707963267948966,"scale_x":0.7142842857142857,"scale_y":0.8421024709178014,"scale_z":1.0129608601270457,"fixed":true},{"item_name":"Blue Rug","item_type":8,"model_url":"models/js/cb-blue-block-60x96.js","xpos":184.68588061910788,"ypos":0.250005,"zpos":122.38666413809182,"rotation":1.5707963267948966,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Coffee Table - Wood","item_type":1,"model_url":"models/js/ik-stockholmcoffee-brown.js","xpos":272.6962787349586,"ypos":24.01483158034958,"zpos":126.73694950426048,"rotation":-1.5707963267948966,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Window","item_type":3,"model_url":"models/js/whitewindow.js","xpos":512.6434934035085,"ypos":157.07894848817114,"zpos":-886.976,"rotation":0,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Window","item_type":3,"model_url":"models/js/whitewindow.js","xpos":-120.92122752323827,"ypos":168.10483780571963,"zpos":-886.976,"rotation":0,"scale_x":0.6603999999996408,"scale_y":0.5810892360052958,"scale_z":1.0332383005354289,"fixed":true},{"item_name":"Window","item_type":3,"model_url":"models/js/whitewindow.js","xpos":438.5412557798525,"ypos":159.40045156749102,"zpos":358.65600000000006,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Window","item_type":3,"model_url":"models/js/whitewindow.js","xpos":307.85036934553574,"ypos":159.1968280144008,"zpos":358.6560000000001,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Window","item_type":3,"model_url":"models/js/whitewindow.js","xpos":182.15084546678992,"ypos":159.0605552363389,"zpos":358.6560000000001,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Closed Door","item_type":7,"model_url":"models/js/closed-door28x80_baked.js","xpos":-103.81899999999992,"ypos":110.80000022010701,"zpos":-105.65599999999995,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Closed Door","item_type":7,"model_url":"models/js/closed-door28x80_baked.js","xpos":325.8265000000001,"ypos":110.5,"zpos":-280.9525143309595,"rotation":-1.5707963267948966,"scale_x":1.2294541709577755,"scale_y":0.9972921724026447,"scale_z":0.9482825135211149,"fixed":true},{"item_name":"Closed Door","item_type":7,"model_url":"models/js/closed-door28x80_baked.js","xpos":325.8265000000001,"ypos":110.80000022010701,"zpos":-439.4767618863214,"rotation":-1.5707963267948966,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Closed Door","item_type":7,"model_url":"models/js/closed-door28x80_baked.js","xpos":250.42795654332926,"ypos":110.80000022010701,"zpos":-188.9679999999999,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Closed Door","item_type":7,"model_url":"models/js/closed-door28x80_baked.js","xpos":527.7045416935933,"ypos":110.80000022010701,"zpos":-499.86400000000003,"rotation":3.141592653589793,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Closed Door","item_type":7,"model_url":"models/js/closed-door28x80_baked.js","xpos":17.379725040490854,"ypos":110.5,"zpos":-886.976,"rotation":0,"scale_x":1.1771369721936145,"scale_y":0.9972921724026447,"scale_z":0.948282513521117,"fixed":true},{"item_name":"Media Console - White","item_type":9,"model_url":"models/js/cb-clapboard_baked.js","xpos":574.12,"ypos":67.89999754396,"zpos":131.42070309211852,"rotation":-1.5707963267948966,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true},{"item_name":"Sofa - Grey","item_type":1,"model_url":"models/js/cb-rochelle-gray_baked.js","xpos":12.257267191489404,"ypos":42.54509923821,"zpos":136.8119273061203,"rotation":1.5707963267948966,"scale_x":1,"scale_y":1,"scale_z":1,"fixed":true}]}';
@@ -151,6 +152,13 @@ var mainControls = function (blueprint3d) {
 		$("#saveMesh").click(saveMesh);
 		$("#saveGLTF").click(saveGLTF);
 		blueprint3d.three.addEventListener(BP3DJS.EVENT_GLTF_READY, saveGLTFCallback);
+
+
+		// Auto-Save Logic
+		setInterval(function () {
+			var data = blueprint3d.model.exportSerialized();
+			localStorage.setItem('architect3d_autosave', data);
+		}, 5000);
 	}
 
 	init();
@@ -416,10 +424,12 @@ var WallProperties = function () {
 		['rooms/textures/wallmap.png', true, 1], ['rooms/textures/wallmap_yellow.png', true, 1],
 		['rooms/textures/light_brick.jpg', false, 50], ['rooms/textures/marbletiles.jpg', false, 300],
 		['rooms/textures/light_brick.jpg', false, 100], ['rooms/textures/light_fine_wood.jpg', false, 300],
-		['rooms/textures/hardwood.png', false, 300]];
+		['rooms/textures/hardwood.png', false, 300], ['', false, 1]];
 
 	this.floormaterialname = 0;
 	this.wallmaterialname = 0;
+	this.wallColor = '#ffffff';
+	this.floorColor = '#cccccc';
 
 	this.forAllWalls = false;
 
@@ -428,26 +438,32 @@ var WallProperties = function () {
 
 	this.wchanged = function () {
 		if (this.currentWall) {
-			this.currentWall.setTexture(this.textures[this.wallmaterialname][0], this.textures[this.wallmaterialname][1], this.textures[this.wallmaterialname][2]);
+			this.currentWall.setTexture(this.textures[this.wallmaterialname][0], this.textures[this.wallmaterialname][1], this.textures[this.wallmaterialname][2], this.wallColor);
 		}
 		if (this.currentFloor && this.forAllWalls) {
-			this.currentFloor.setRoomWallsTexture(this.textures[this.wallmaterialname][0], this.textures[this.wallmaterialname][1], this.textures[this.wallmaterialname][2]);
+			this.currentFloor.setRoomWallsTexture(this.textures[this.wallmaterialname][0], this.textures[this.wallmaterialname][1], this.textures[this.wallmaterialname][2], this.wallColor);
 		}
 	}
 
 	this.fchanged = function () {
 		if (this.currentFloor) {
-			this.currentFloor.setTexture(this.textures[this.floormaterialname][0], this.textures[this.floormaterialname][1], this.textures[this.floormaterialname][2]);
+			this.currentFloor.setTexture(this.textures[this.floormaterialname][0], this.textures[this.floormaterialname][1], this.textures[this.floormaterialname][2], this.floorColor);
 		}
 	}
 
 
 	this.setWall = function (wall) {
 		this.currentWall = wall;
+		if (wall) {
+			this.wallColor = wall.frontColor || '#ffffff';
+		}
 	}
 
 	this.setFloor = function (floor) {
 		this.currentFloor = floor;
+		if (floor) {
+			this.floorColor = floor.color || '#cccccc';
+		}
 	}
 }
 
@@ -471,11 +487,13 @@ function addBlueprintListeners(blueprint3d) {
 		aWall = new WallProperties();
 		aWall.setWall(wall);
 		aWall.setFloor(null);
-		wallPropFolder = getWallAndFloorPropertiesFolder(selectionsFolder, aWall);
-		//		selectionsFolder.addFolder(wallPropFolder);
 
-		wallPropFolder.open();
-		selectionsFolder.open();
+		$('#custom-color-panel').show();
+		$('#wall-section-container').show();
+		$('#floor-section-container').hide();
+		$('#wall-color-picker').val(aWall.wallColor || '#ffffff');
+		if (window.generateShades) window.generateShades(aWall.wallColor || '#ffffff');
+		$('#wall-all-checkbox').prop('checked', false);
 	}
 
 	function floorClicked(floor) {
@@ -485,15 +503,15 @@ function addBlueprintListeners(blueprint3d) {
 		aWall.setFloor(floor);
 		aWall.setWall(null);
 
-		wallPropFolder = getWallAndFloorPropertiesFolder(selectionsFolder, aWall);
-		//		selectionsFolder.addFolder(wallPropFolder);
-
-		wallPropFolder.open();
-		selectionsFolder.open();
+		$('#custom-color-panel').show();
+		$('#wall-section-container').hide();
+		$('#floor-section-container').show();
+		$('#wall-all-checkbox').prop('checked', false);
 	}
 
 	function itemSelected(item) {
 		closeCurrent3DSelectionFolders();
+		$('#custom-color-panel').hide();
 
 		anItem = new ItemProperties(selectionsFolder, item);
 		//		anItem.setItem(item);
@@ -503,13 +521,18 @@ function addBlueprintListeners(blueprint3d) {
 
 		itemPropFolder.open();
 		selectionsFolder.open();
+		if (window.openItemEditorModal) {
+			window.openItemEditorModal(item);
+		}
 
 	}
 	function itemUnselected() {
 		closeCurrent3DSelectionFolders();
+		$('#custom-color-panel').hide();
 		if (anItem != null) {
 			anItem.setItem(undefined);
 		}
+		selectedItemForEdit = null;
 	}
 
 	three.addEventListener(BP3DJS.EVENT_ITEM_SELECTED, function (o) { itemSelected(o.item); });
@@ -523,6 +546,7 @@ function addBlueprintListeners(blueprint3d) {
 	}
 
 	function addGUIFolder(o) {
+		$('#custom-color-panel').hide();
 		//    	console.log(o.type, o.item);
 		if (currentFolder) {
 			selectionsFolder.removeFolder(currentFolder.name);
@@ -585,7 +609,7 @@ function getCornerPropertiesFolder(gui, corner) {
 
 function getRoomPropertiesFolder(gui, room) {
 	var f = gui.addFolder('Current Room');
-	var namecontrol = f.add(room, 'name').name("Name");
+	var namecontrol = f.add(corner, 'name').name("Name");
 	return f;
 }
 
@@ -723,23 +747,7 @@ function getItemPropertiesFolder(gui, anItem) {
 	return f;
 }
 
-function getWallAndFloorPropertiesFolder(gui, aWall) {
-	var f = gui.addFolder('Wall and Floor (3D)');
-	var wcontrol = f.add(aWall, 'wallmaterialname', { Grey: 0, Yellow: 1, Checker: 2, Marble: 3, Bricks: 4 }).name('Wall');
-	var fcontrol = f.add(aWall, 'floormaterialname', { 'Fine Wood': 5, 'Hard Wood': 6 }).name('Floor');
-	var multicontrol = f.add(aWall, 'forAllWalls').name('All Walls In Room');
-	function wchanged() {
-		aWall.wchanged();
-	}
 
-	function fchanged() {
-		aWall.fchanged();
-	}
-
-	wcontrol.onChange(wchanged);
-	fcontrol.onChange(fchanged);
-	return f;
-}
 
 function datGUI(three, floorplanner) {
 	gui = new dat.GUI();
@@ -759,6 +767,344 @@ function datGUI(three, floorplanner) {
 
 
 $(document).ready(function () {
+	var floorStates = [{ name: 'Floor 1', design: myhome }];
+	var activeFloorIndex = 0;
+	var floorCounter = 1;
+
+	function updateFloorLabel() {
+		$('#activeFloorLabel').text(floorStates[activeFloorIndex].name);
+	}
+
+	function saveActiveFloorState() {
+		floorStates[activeFloorIndex].design = blueprint3d.model.exportSerialized();
+	}
+
+	function loadFloorByIndex(index) {
+		if (!floorStates[index]) {
+			return;
+		}
+		saveActiveFloorState();
+		activeFloorIndex = index;
+		blueprint3d.model.loadSerialized(floorStates[activeFloorIndex].design);
+		updateFloorLabel();
+	}
+
+	function addFloorState() {
+		saveActiveFloorState();
+		floorCounter += 1;
+		floorStates.push({ name: 'Floor ' + floorCounter, design: myhome });
+		activeFloorIndex = floorStates.length - 1;
+		blueprint3d.model.loadSerialized(myhome);
+		updateFloorLabel();
+	}
+
+	function addRoomInCenter() {
+		var floorplan = blueprint3d.model.floorplan;
+		var center = floorplan.getCenter();
+		var size = 180;
+		var c1 = floorplan.newCorner(center.x - size, center.z - size);
+		var c2 = floorplan.newCorner(center.x + size, center.z - size);
+		var c3 = floorplan.newCorner(center.x + size, center.z + size);
+		var c4 = floorplan.newCorner(center.x - size, center.z + size);
+		floorplan.newWall(c1, c2);
+		floorplan.newWall(c2, c3);
+		floorplan.newWall(c3, c4);
+		floorplan.newWall(c4, c1);
+		blueprint3d.floorplanner.reset();
+	}
+
+	function applyItemFilters() {
+		var query = ($('#item-search').val() || '').toLowerCase().trim();
+		var category = $('#category-chips .category-chip.active').attr('data-category') || 'all';
+		$('#add-items .item-col').each(function () {
+			var $card = $(this).find('.add-item');
+			var itemName = ($card.attr('data-item-name') || '').toLowerCase();
+			var itemCategory = ($card.attr('data-item-category') || 'all').toLowerCase();
+			var matchesQuery = !query || itemName.indexOf(query) !== -1;
+			var matchesCategory = category === 'all' || itemCategory === category;
+			$(this).toggle(matchesQuery && matchesCategory);
+		});
+	}
+
+	function notifyStatus(message, ms) {
+		var $status = $('#app-status');
+		if (!$status.length) {
+			$status = $('<div id="app-status" class="btn-hint"></div>');
+			$('body').append($status);
+		}
+		$status.text(message).show();
+		setTimeout(function () { $status.fadeOut(200); }, ms || 1500);
+	}
+
+	function setTheme(theme) {
+		var dark = theme === 'dark';
+		$('body').toggleClass('theme-dark', dark);
+		localStorage.setItem('architect3d-theme', dark ? 'dark' : 'light');
+	}
+
+	function applySavedTheme() {
+		setTheme(localStorage.getItem('architect3d-theme') || 'light');
+	}
+
+	function setAdvancedVisible(isVisible) {
+		$('#viewcontrols').toggleClass('advanced-hidden', !isVisible);
+		$('#showSwitchCameraMode').toggleClass('advanced-hidden', !isVisible);
+		$('#showSwitchWireframeMode').toggleClass('advanced-hidden', !isVisible);
+		localStorage.setItem('architect3d-advanced-ui', isVisible ? '1' : '0');
+	}
+
+	function applyAdvancedPreference() {
+		setAdvancedVisible(localStorage.getItem('architect3d-advanced-ui') === '1');
+	}
+
+	function createRectRoom(floorplan, x1, y1, x2, y2) {
+		var c1 = floorplan.newCorner(x1, y1);
+		var c2 = floorplan.newCorner(x2, y1);
+		var c3 = floorplan.newCorner(x2, y2);
+		var c4 = floorplan.newCorner(x1, y2);
+		floorplan.newWall(c1, c2);
+		floorplan.newWall(c2, c3);
+		floorplan.newWall(c3, c4);
+		floorplan.newWall(c4, c1);
+	}
+
+	function buildTemplateLayout(templateId) {
+		blueprint3d.model.loadSerialized(myhome);
+		var floorplan = blueprint3d.model.floorplan;
+		floorplan.reset();
+		if (templateId === 'studio') {
+			createRectRoom(floorplan, -260, -180, 260, 180);
+		} else if (templateId === '1bhk') {
+			createRectRoom(floorplan, -360, -220, 360, 220);
+			createRectRoom(floorplan, -360, -220, -120, 60);
+		} else if (templateId === '2bhk') {
+			createRectRoom(floorplan, -420, -260, 420, 260);
+			createRectRoom(floorplan, -420, -260, -120, 20);
+			createRectRoom(floorplan, 120, -260, 420, 20);
+		} else if (templateId === 'office') {
+			createRectRoom(floorplan, -500, -300, 500, 300);
+			createRectRoom(floorplan, -500, -300, -120, -20);
+			createRectRoom(floorplan, 120, -300, 500, -20);
+			createRectRoom(floorplan, -140, 40, 140, 300);
+		}
+		floorplan.update();
+		blueprint3d.floorplanner.reset();
+		saveActiveFloorState();
+		notifyStatus('Loaded template: ' + templateId.toUpperCase());
+	}
+
+	function fillItemEditorFields(item) {
+		$('#item-edit-name').val(item.metadata.itemName || 'Selected Item');
+		$('#item-edit-width').val(BP3DJS.Dimensioning.cmToMeasureRaw(item.getWidth()).toFixed(2));
+		$('#item-edit-height').val(BP3DJS.Dimensioning.cmToMeasureRaw(item.getHeight()).toFixed(2));
+		$('#item-edit-depth').val(BP3DJS.Dimensioning.cmToMeasureRaw(item.getDepth()).toFixed(2));
+
+		if (item.metadata.price && item.metadata.buyLink) {
+			$('#item-edit-price').text(item.metadata.price);
+			$('#item-buy-btn').attr('href', item.metadata.buyLink);
+			$('#item-buy-group').show();
+		} else {
+			$('#item-buy-group').hide();
+		}
+	}
+
+	window.openItemEditorModal = function (item) {
+		if (!item) { return; }
+		selectedItemForEdit = item;
+		fillItemEditorFields(item);
+		$('#item-editor-modal').modal('show');
+	};
+
+	function removeSelectedItem() {
+		if (!selectedItemForEdit) {
+			notifyStatus('Select an object first');
+			return;
+		}
+		selectedItemForEdit.remove();
+		selectedItemForEdit = null;
+		$('#item-editor-modal').modal('hide');
+		notifyStatus('Object removed');
+	}
+
+	function applySelectedItemResize() {
+		if (!selectedItemForEdit) {
+			notifyStatus('No selected object');
+			return;
+		}
+		var w = parseFloat($('#item-edit-width').val());
+		var h = parseFloat($('#item-edit-height').val());
+		var d = parseFloat($('#item-edit-depth').val());
+		if (!w || !h || !d || w <= 0 || h <= 0 || d <= 0) {
+			notifyStatus('Use valid dimensions');
+			return;
+		}
+		selectedItemForEdit.resize(
+			BP3DJS.Dimensioning.cmFromMeasureRaw(h),
+			BP3DJS.Dimensioning.cmFromMeasureRaw(w),
+			BP3DJS.Dimensioning.cmFromMeasureRaw(d)
+		);
+		blueprint3d.three.ensureNeedsUpdate();
+		notifyStatus('Object resized');
+	}
+
+	function previewSelectedItemResize() {
+		if (!selectedItemForEdit) {
+			return;
+		}
+		var w = parseFloat($('#item-edit-width').val());
+		var h = parseFloat($('#item-edit-height').val());
+		var d = parseFloat($('#item-edit-depth').val());
+		if (!w || !h || !d || w <= 0 || h <= 0 || d <= 0) {
+			return;
+		}
+		selectedItemForEdit.resize(
+			BP3DJS.Dimensioning.cmFromMeasureRaw(h),
+			BP3DJS.Dimensioning.cmFromMeasureRaw(w),
+			BP3DJS.Dimensioning.cmFromMeasureRaw(d)
+		);
+		blueprint3d.three.ensureNeedsUpdate();
+	}
+
+	function enableDraggableItemEditor() {
+		var $dialog = $('#item-editor-modal .modal-dialog');
+		var $header = $('#item-editor-modal .modal-header');
+		var dragging = false;
+		var offsetX = 0;
+		var offsetY = 0;
+		$header.on('mousedown', function (e) {
+			dragging = true;
+			var pos = $dialog.offset();
+			offsetX = e.pageX - pos.left;
+			offsetY = e.pageY - pos.top;
+			$dialog.css({ transform: 'none', left: pos.left + 'px', top: pos.top + 'px' });
+			e.preventDefault();
+		});
+		$(document).on('mousemove', function (e) {
+			if (!dragging) { return; }
+			$dialog.css({ left: Math.max(10, e.pageX - offsetX) + 'px', top: Math.max(10, e.pageY - offsetY) + 'px' });
+		});
+		$(document).on('mouseup', function () { dragging = false; });
+	}
+
+	function triggerDownload(dataUrl, fileName) {
+		var a = document.createElement('a');
+		a.href = dataUrl;
+		a.download = fileName;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	}
+
+	function drawImageProp(ctx, img, x, y, w, h) {
+		var imgRatio = img.width / img.height;
+		var targetRatio = w / h;
+		var drawW = w;
+		var drawH = h;
+		var offsetX = x;
+		var offsetY = y;
+		if (imgRatio > targetRatio) {
+			drawH = w / imgRatio;
+			offsetY = y + (h - drawH) / 2;
+		} else {
+			drawW = h * imgRatio;
+			offsetX = x + (w - drawW) / 2;
+		}
+		ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+	}
+
+	function captureAndDownloadViews() {
+		notifyStatus('Generating High-Quality Presentation... Please wait.', 4000);
+		var canvas2d = document.getElementById('floorplanner-canvas');
+
+		var viewsToCapture = ['isometryview', 'topview', 'frontview', 'leftview'];
+		var images = [];
+		var idx = 0;
+
+		function nextView() {
+			if (idx >= viewsToCapture.length) {
+				buildCollage();
+				return;
+			}
+			var v = viewsToCapture[idx];
+			blueprint3d.three.switchView(v);
+			// wait slightly longer to ensure high-res shadows fully render
+			setTimeout(function () {
+				var img = new Image();
+				img.src = blueprint3d.three.dataUrl();
+				img.onload = function () {
+					images.push(img);
+					idx++;
+					nextView();
+				};
+			}, 600);
+		}
+
+		function buildCollage() {
+			var cWidth = 1920;
+			var cHeight = 1080;
+			var collage = document.createElement('canvas');
+			collage.width = cWidth;
+			collage.height = cHeight;
+			var ctx = collage.getContext('2d');
+
+			// Fill dark theme background
+			ctx.fillStyle = '#0f172a';
+			ctx.fillRect(0, 0, cWidth, cHeight);
+
+			// 2D Floorplan on the left
+			if (canvas2d) {
+				var floorplanImg = new Image();
+				floorplanImg.src = canvas2d.toDataURL('image/png');
+				floorplanImg.onload = function () {
+					ctx.fillStyle = '#1e293b';
+					ctx.fillRect(40, 40, 800, 1000);
+					drawImageProp(ctx, floorplanImg, 50, 50, 780, 980);
+					render3DViews();
+				}
+			} else {
+				render3DViews();
+			}
+
+			function render3DViews() {
+				// 3D Isometric top right
+				if (images[0]) {
+					ctx.fillStyle = '#1e293b';
+					ctx.fillRect(860, 40, 1020, 500);
+					drawImageProp(ctx, images[0], 870, 50, 1000, 480);
+				}
+
+				// 3D Top bottom mid
+				if (images[1]) {
+					ctx.fillStyle = '#1e293b';
+					ctx.fillRect(860, 560, 320, 480);
+					drawImageProp(ctx, images[1], 870, 570, 300, 460);
+				}
+
+				// 3D Front bottom right
+				if (images[2]) {
+					ctx.fillStyle = '#1e293b';
+					ctx.fillRect(1200, 560, 320, 480);
+					drawImageProp(ctx, images[2], 1210, 570, 300, 460);
+				}
+
+				// 3D Side bottom far right
+				if (images[3]) {
+					ctx.fillStyle = '#1e293b';
+					ctx.fillRect(1540, 560, 340, 480);
+					drawImageProp(ctx, images[3], 1550, 570, 320, 460);
+				}
+
+				triggerDownload(collage.toDataURL('image/jpeg', 0.95), 'Architect3D-Presentation.jpg');
+				notifyStatus('Presentation Downloaded successfully!', 2000);
+
+				// Restore view
+				blueprint3d.three.switchView('isometryview');
+			}
+		}
+
+		nextView();
+	}
+
 	dat.GUI.prototype.removeFolder = function (name) {
 		var folder = this.__folders[name];
 		if (!folder) {
@@ -779,24 +1125,33 @@ $(document).ready(function () {
 		widget: false
 	}
 	blueprint3d = new BP3DJS.BlueprintJS(opts);
+	applySavedTheme();
+	applyAdvancedPreference();
 	var viewerFloorplanner = new ViewerFloorplanner(blueprint3d);
 
 	blueprint3d.model.addEventListener(BP3DJS.EVENT_LOADED, function () { console.log('LOAD SERIALIZED JSON ::: '); });
 
 
 	mainControls(blueprint3d);
-	blueprint3d.model.loadSerialized(myhome);
+	// Load Auto-Save on start or fallback to myhome
+	var saved = localStorage.getItem('architect3d_autosave');
+	if (saved) {
+		blueprint3d.model.loadSerialized(saved);
+	} else {
+		blueprint3d.model.loadSerialized(myhome);
+	}
+	updateFloorLabel();
 
 
 	addBlueprintListeners(blueprint3d);
+	blueprint3d.three.addEventListener(BP3DJS.EVENT_ITEM_SELECTED, function (o) {
+		if (o && o.item) {
+			selectedItemForEdit = o.item;
+		}
+	});
 	datGUI(blueprint3d.three, blueprint3d.floorplanner);
 	blueprint3d.three.stopSpin();
-
-	// Connect blueprint3d instance to the API layer for cloud save/load
-	if (window.A3DApi && window.A3DApi.setBP3DRef) {
-		window.A3DApi.setBP3DRef(blueprint3d);
-	}
-
+	enableDraggableItemEditor();
 	//	gui.closed = true;
 
 
@@ -859,9 +1214,91 @@ $(document).ready(function () {
 		blueprint3d.three.switchView($(this).attr('id'));
 	});
 
+	$('#addRoom2d').click(function () {
+		addRoomInCenter();
+	});
+
+	$('#quickAddWall').click(function () {
+		$('#showFloorPlan').trigger('click');
+		$('#draw').trigger('click');
+	});
+
+	$('#addFloor').click(function () {
+		addFloorState();
+	});
+
+	$('#prevFloor').click(function () {
+		if (activeFloorIndex > 0) {
+			loadFloorByIndex(activeFloorIndex - 1);
+		}
+	});
+
+	$('#nextFloor').click(function () {
+		if (activeFloorIndex < floorStates.length - 1) {
+			loadFloorByIndex(activeFloorIndex + 1);
+		}
+	});
+
+	function applyItemFilters() {
+		var search = $('#item-search').val().toLowerCase();
+		var category = $('#category-chips .category-chip.active').attr('data-category');
+
+		$('.item-col').each(function () {
+			var $col = $(this);
+			var $item = $col.find('.add-item');
+			var name = $item.attr('data-item-name');
+			var itemCat = $item.attr('data-item-category');
+
+			var matchesSearch = name.indexOf(search) !== -1;
+			var matchesCategory = (category === 'all' || itemCat === category);
+
+			if (matchesSearch && matchesCategory) {
+				$col.show();
+			} else {
+				$col.hide();
+			}
+		});
+
+		// Hide empty panels
+		$('.panel').each(function () {
+			var visibleItems = $(this).find('.item-col:visible').length;
+			if (visibleItems === 0) {
+				$(this).hide();
+			} else {
+				$(this).show();
+			}
+		});
+	}
+
+	$('#item-search').on('input', applyItemFilters);
+	$('#category-chips').on('click', '.category-chip', function () {
+		$('#category-chips .category-chip').removeClass('active');
+		$(this).addClass('active');
+		applyItemFilters();
+	});
+
+	$('#toggleTheme').click(function () {
+		setTheme($('body').hasClass('theme-dark') ? 'light' : 'dark');
+	});
+
+	$('#toggleAdvanced').click(function () {
+		var isHidden = $('#viewcontrols').hasClass('advanced-hidden');
+		setAdvancedVisible(isHidden);
+	});
+
+	$('#templateStudio').click(function () { buildTemplateLayout('studio'); });
+	$('#template1Bhk').click(function () { buildTemplateLayout('1bhk'); });
+	$('#template2Bhk').click(function () { buildTemplateLayout('2bhk'); });
+	$('#templateOffice').click(function () { buildTemplateLayout('office'); });
+	$('#removeSelectedItem').click(removeSelectedItem);
+	$('#item-delete-btn').click(removeSelectedItem);
+	$('#item-save-btn').click(applySelectedItemResize);
+	$('#item-edit-width, #item-edit-height, #item-edit-depth').on('input change', previewSelectedItemResize);
+	$('#downloadViews').click(captureAndDownloadViews);
 
 
-	$("#add-items").find(".add-item").mousedown(function (e) {
+
+	$("#add-items").on("mousedown", ".add-item", function (e) {
 		var modelUrl = $(this).attr("model-url");
 		var itemType = parseInt($(this).attr("model-type"));
 		var itemFormat = $(this).attr('model-format');
@@ -871,19 +1308,165 @@ $(document).ready(function () {
 			modelUrl: modelUrl,
 			itemType: itemType,
 			format: itemFormat,
-
+			price: $(this).attr("data-price"),
+			buyLink: $(this).attr("data-buylink"),
+			ikeaDim: {
+				w: parseFloat($(this).attr("data-dim-w")),
+				h: parseFloat($(this).attr("data-dim-h")),
+				d: parseFloat($(this).attr("data-dim-d"))
+			}
 		}
 		console.log('ITEM TYPE ::: ', itemType);
-		if ([2, 3, 7, 9].indexOf(metadata.itemType) != -1 && aWall.currentWall) {
+
+		var newItem = null;
+		if ([2, 3, 7, 9].indexOf(metadata.itemType) != -1 && aWall && aWall.currentWall) {
 			var placeAt = aWall.currentWall.center.clone();
-			blueprint3d.model.scene.addItem(itemType, modelUrl, metadata, null, null, null, false, { position: placeAt, edge: aWall.currentWall });
+			newItem = blueprint3d.model.scene.addItem(itemType, modelUrl, metadata, null, null, null, false, { position: placeAt, edge: aWall.currentWall });
 		}
-		else if (aWall.currentFloor) {
+		else if (aWall && aWall.currentFloor) {
 			var placeAt = aWall.currentFloor.center.clone();
-			blueprint3d.model.scene.addItem(itemType, modelUrl, metadata, null, null, null, false, { position: placeAt });
+			newItem = blueprint3d.model.scene.addItem(itemType, modelUrl, metadata, null, null, null, false, { position: placeAt });
 		}
 		else {
-			blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
+			newItem = blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
+		}
+
+		// Handle auto-scaling for IKEA items
+		if (metadata.ikeaDim && metadata.ikeaDim.w) {
+			// We need to wait for the model to load before we can resize it.
+			// The addItem implementation might be returning an item shell that is still loading.
+			// However, in many versions of this engine, you can set the size immediately if it's handled in the constructor or wait for a load event.
+			// Let's try setting it after a short delay or if the engine supports a callback.
+			setTimeout(function () {
+				if (newItem && newItem.resize) {
+					newItem.resize(metadata.ikeaDim.h, metadata.ikeaDim.w, metadata.ikeaDim.d);
+					blueprint3d.three.ensureNeedsUpdate();
+				}
+			}, 500);
+		}
+
+		blueprint3d.three.pauseTheRendering(false);
+		blueprint3d.three.ensureNeedsUpdate();
+	});
+
+	// Custom Color Panel Logic
+	$('#custom-color-panel-close').click(function () {
+		$('#custom-color-panel').hide();
+	});
+
+	$('#wall-all-checkbox').change(function () {
+		if (aWall) aWall.forAllWalls = $(this).is(':checked');
+	});
+
+	function hexToHsl(hex) {
+		hex = hex.replace(/^#/, '');
+		if (hex.length === 3) hex = hex.split('').map(function (x) { return x + x; }).join('');
+		var r = parseInt(hex.substring(0, 2), 16) / 255;
+		var g = parseInt(hex.substring(2, 4), 16) / 255;
+		var b = parseInt(hex.substring(4, 6), 16) / 255;
+		var max = Math.max(r, g, b), min = Math.min(r, g, b);
+		var h, s, l = (max + min) / 2;
+		if (max == min) {
+			h = s = 0;
+		} else {
+			var d = max - min;
+			s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+			switch (max) {
+				case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+				case g: h = (b - r) / d + 2; break;
+				case b: h = (r - g) / d + 4; break;
+			}
+			h /= 6;
+		}
+		return [h, s, l];
+	}
+
+	function hslToHex(h, s, l) {
+		var r, g, b;
+		if (s == 0) {
+			r = g = b = l;
+		} else {
+			var hue2rgb = function hue2rgb(p, q, t) {
+				if (t < 0) t += 1;
+				if (t > 1) t -= 1;
+				if (t < 1 / 6) return p + (q - p) * 6 * t;
+				if (t < 1 / 2) return q;
+				if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+				return p;
+			}
+			var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+			var p = 2 * l - q;
+			r = hue2rgb(p, q, h + 1 / 3);
+			g = hue2rgb(p, q, h);
+			b = hue2rgb(p, q, h - 1 / 3);
+		}
+		var toHex = function (x) {
+			var hex = Math.round(x * 255).toString(16);
+			return hex.length === 1 ? '0' + hex : hex;
+		};
+		return '#' + toHex(r) + toHex(g) + toHex(b);
+	}
+
+	window.generateShades = function (baseHex) {
+		var hsl = hexToHsl(baseHex);
+		var h = hsl[0], s = hsl[1];
+		var lightnessLevels = [0.1, 0.3, 0.5, 0.7, 0.9];
+		var container = $('#wall-color-shades');
+		container.empty();
+
+		lightnessLevels.forEach(function (l) {
+			var hex = hslToHex(h, s, l);
+			var shadeDiv = $('<div class="color-shade"></div>').css({
+				width: '30px',
+				height: '30px',
+				backgroundColor: hex,
+				cursor: 'pointer',
+				border: '1px solid #ccc',
+				borderRadius: '4px',
+				transition: 'transform 0.1s'
+			}).hover(
+				function () { $(this).css('transform', 'scale(1.1)'); },
+				function () { $(this).css('transform', 'scale(1)'); }
+			);
+			shadeDiv.click(function () {
+				if (aWall && aWall.currentWall) {
+					aWall.wallColor = hex;
+					aWall.wallmaterialname = 7; // Solid Color
+					aWall.wchanged();
+					blueprint3d.three.ensureNeedsUpdate();
+				}
+			});
+			container.append(shadeDiv);
+		});
+	};
+
+	$('#wall-color-picker').on('input change', function () {
+		var hex = $(this).val();
+		window.generateShades(hex);
+		if (aWall && aWall.currentWall) {
+			aWall.wallColor = hex;
+			aWall.wallmaterialname = 7; // Solid Color
+			aWall.wchanged();
+			blueprint3d.three.ensureNeedsUpdate();
 		}
 	});
+
+	$('#floor-presets button').click(function () {
+		var preset = $(this).attr('data-preset');
+		if (aWall && aWall.currentFloor) {
+			if (preset === 'white') {
+				aWall.floormaterialname = 7; // Solid Color
+				aWall.floorColor = '#ffffff';
+			} else if (preset === 'wood') {
+				aWall.floormaterialname = 6; // Hard Wood
+				aWall.floorColor = '#ffffff'; // The texture itself has color
+			} else if (preset === 'black-marble') {
+				aWall.floormaterialname = 3; // Marble
+				aWall.floorColor = '#222222'; // Darken the marble
+			}
+			aWall.fchanged();
+			blueprint3d.three.ensureNeedsUpdate();
+		}
+	});
+
 });

@@ -44,16 +44,19 @@ export class Floor extends EventDispatcher
 	{
 		var textureSettings = this.room.getTexture();
 		// setup texture
-//		var floorTexture = ImageUtils.loadTexture(textureSettings.url);
-		var floorTexture = new TextureLoader().load(textureSettings.url);
-		floorTexture.wrapS = RepeatWrapping;
-		floorTexture.wrapT = RepeatWrapping;
-		floorTexture.repeat.set(1, 1);
+		var floorTexture = null;
+		if (textureSettings.url) {
+			floorTexture = new TextureLoader().load(textureSettings.url);
+			floorTexture.wrapS = RepeatWrapping;
+			floorTexture.wrapT = RepeatWrapping;
+			floorTexture.repeat.set(1, 1);
+		}
+
 		var floorMaterialTop = new MeshPhongMaterial({
 			map: floorTexture,
 			side: DoubleSide,
 			// ambient: 0xffffff, TODO_Ekki
-			color: 0xcccccc,
+			color: textureSettings.color || 0xcccccc,
 			specular: 0x0a0a0a
 		});
 

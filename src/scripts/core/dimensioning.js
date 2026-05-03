@@ -104,19 +104,19 @@ export class Dimensioning
 		{
 		case dimFeetAndInch:// dimFeetAndInch returns only the feet
 			var allInFeet = (cm * Math.pow(0.032808416666669996953, power));
-			return allInFeet;
+			return parseFloat(allInFeet.toFixed(2));
 		case dimInch:
 			var inches = Math.round(decimals * (cm * Math.pow(0.393700, power))) / decimals;
-			return inches;
+			return parseFloat(inches.toFixed(2));
 		case dimMilliMeter:
 			var mm = Math.round(decimals * (cm * Math.pow(10, power))) / decimals;
-			return mm;
+			return parseFloat(mm.toFixed(2));
 		case dimCentiMeter:
-			return Math.round(decimals * cm) / decimals;
+			return parseFloat((Math.round(decimals * cm) / decimals).toFixed(2));
 		case dimMeter:
 		default:
 			var m = Math.round(decimals * (cm  * Math.pow(0.01, power))) / decimals;
-			return m;
+			return parseFloat(m.toFixed(2));
 		}
 	}
 
@@ -135,17 +135,14 @@ export class Dimensioning
 			var remainingInches = Math.round(remainingFeet * 12);
 			return floorFeet + '\'' + remainingInches + '"';
 		case dimInch:
-			var inches = Math.round(decimals * (cm * Math.pow(0.393700, power))) / decimals;
-			return inches + '\'';
+			return Dimensioning.cmToMeasureRaw(cm, power) + '\'';
 		case dimMilliMeter:
-			var mm = Math.round(decimals * (cm * Math.pow(10, power))) / decimals;
-			return '' + mm + 'mm';
+			return Dimensioning.cmToMeasureRaw(cm, power) + 'mm';
 		case dimCentiMeter:
-			return '' + Math.round(decimals * cm) / decimals + 'cm';
+			return Dimensioning.cmToMeasureRaw(cm, power) + 'cm';
 		case dimMeter:
 		default:
-			var m = Math.round(decimals * (cm  * Math.pow(0.01, power))) / decimals;
-			return '' + m + 'm';
+			return Dimensioning.cmToMeasureRaw(cm, power) + 'm';
 		}
 	}
 }

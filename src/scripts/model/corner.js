@@ -662,7 +662,6 @@ export class Corner extends EventDispatcher
 		{
 			var room = rooms[i];
 			//Below returns the roomname object
-			if(!this.floorplan.metaroomsdata) { this.floorplan.metaroomsdata = {}; }
 			var roomname = this.floorplan.metaroomsdata[room.roomByCornersId];
 			if(roomname)
 			{

@@ -665,7 +665,7 @@ export class Floorplan extends EventDispatcher
 		{
 			this.floorTextures = floorplan.newFloorTextures;
 		}
-		this.metaroomsdata = floorplan.rooms || {};
+		this.metaroomsdata = floorplan.rooms;
 		this.update();
 
 		if('carbonSheet' in floorplan)
@@ -701,9 +701,9 @@ export class Floorplan extends EventDispatcher
 	/**
 	 * @deprecated
 	 */
-	setFloorTexture(uuid, url, scale)
+	setFloorTexture(uuid, url, scale, color)
 	{
-		this.floorTextures[uuid] = {url: url,scale: scale};
+		this.floorTextures[uuid] = {url: url, scale: scale, color: color || '#cccccc'};
 	}
 
 	/** clear out obsolete floor textures */
@@ -802,8 +802,7 @@ export class Floorplan extends EventDispatcher
 			room.addEventListener(EVENT_ROOM_NAME_CHANGED, (e)=>{scope.roomNameChanged(e);});
 			room.addEventListener(EVENT_ROOM_ATTRIBUTES_CHANGED, function(o){
 				var room = o.item;
-				scope.dispatchEvent(o);
-				if(!scope.metaroomsdata) { scope.metaroomsdata = {}; }
+				scope.dispatchEvent(o);				
 				if(scope.metaroomsdata[room.roomByCornersId])
 				{
 					scope.metaroomsdata[room.roomByCornersId]['name'] = room.name;

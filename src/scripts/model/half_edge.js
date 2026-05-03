@@ -177,9 +177,9 @@ export class HalfEdge extends EventDispatcher
 	 * @param {Number} textureScale The scale value using which the number of repetitions of the texture image is calculated
 	 * @emits {EVENT_REDRAW}
 	 */
-	setTexture(textureUrl, textureStretch, textureScale)
+	setTexture(textureUrl, textureStretch, textureScale, textureColor)
 	{
-		var texture = {url: textureUrl, stretch: textureStretch, scale: textureScale};
+		var texture = {url: textureUrl, stretch: textureStretch, scale: textureScale, color: textureColor || '#ffffff'};
 		if (this.front)
 		{
 			this.wall.frontTexture = texture;

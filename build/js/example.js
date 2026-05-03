@@ -341,9 +341,9 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   }
 
   function handleWindowResize() {
-    var navH = 52;
-    $(".sidebar").height(window.innerHeight - navH);
-    $("#add-items").height(window.innerHeight - navH);
+    $(".sidebar").height(window.innerHeight);
+    $("#add-items").height(window.innerHeight);
+
   };
 
   // TODO: this doesn't really belong here
@@ -565,9 +565,6 @@ $(document).ready(function() {
     widget: false
   }
   var blueprint3d = new BP3DJS.BlueprintJS(opts);
-
-  // Connect backend API to blueprint3d instance
-  if (window.A3DApi) { window.A3DApi.setBP3DRef(blueprint3d); }
 
   var modalEffects = new ModalEffects(blueprint3d);
   var viewerFloorplanner = new ViewerFloorplanner(blueprint3d);

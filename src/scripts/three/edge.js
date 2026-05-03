@@ -179,16 +179,23 @@ export class Edge extends EventDispatcher
 		var stretch = textureData.stretch;
 		var url = textureData.url;
 		var scale = textureData.scale;
-		this.texture = new TextureLoader().load(url, callback);
+		this.wallColor = textureData.color || 0xFFFFFF;
 
-		if (!stretch)
-		{
-			var height = this.wall.height;
-			var width = this.edge.interiorDistance();
-			this.texture.wrapT = RepeatWrapping;
-			this.texture.wrapS = RepeatWrapping;
-			this.texture.repeat.set(width / scale, height / scale);
-			this.texture.needsUpdate = true;
+		if (url) {
+			this.texture = new TextureLoader().load(url, callback);
+
+			if (!stretch)
+			{
+				var height = this.wall.height;
+				var width = this.edge.interiorDistance();
+				this.texture.wrapT = RepeatWrapping;
+				this.texture.wrapS = RepeatWrapping;
+				this.texture.repeat.set(width / scale, height / scale);
+				this.texture.needsUpdate = true;
+			}
+		} else {
+			this.texture = null;
+			callback();
 		}
 	}
 
@@ -205,7 +212,7 @@ export class Edge extends EventDispatcher
 			return;			
 		}
 
-		var color = 0xFFFFFF;
+		var color = this.wallColor;
 		var wallMaterial = new MeshBasicMaterial({
 			color: color,
 			side: FrontSide,

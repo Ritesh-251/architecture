@@ -157,10 +157,17 @@ export class Scene extends EventDispatcher
 			return [materials, materials.length-1];
 		}
 
+		var itemClass = Factory.getClass(itemType);
+		if(!itemClass)
+		{
+			console.error('Unsupported itemType', itemType, metadata);
+			return;
+		}
+
 		var loaderCallback = function (geometry, materials, isgltf=false)
 		{
 //			var item = new (Factory.getClass(itemType))(scope.model, metadata, geometry, new MeshFaceMaterial(materials), position, rotation, scale);
-			var item = new (Factory.getClass(itemType))(scope.model, metadata, geometry, materials, position, rotation, scale, isgltf);
+			var item = new itemClass(scope.model, metadata, geometry, materials, position, rotation, scale, isgltf);
 			item.fixed = fixed || false;
 			scope.items.push(item);
 			scope.add(item);
@@ -255,18 +262,22 @@ export class Scene extends EventDispatcher
 			loaderCallback(newGeometry, materials);
 		};
 
+		var onLoadError = function(err)
+		{
+			console.error('Item load failed:', fileName, err);
+		};
 		this.dispatchEvent({type:EVENT_ITEM_LOADING});
 		if(!metadata.format)
 		{
-			this.loader.load(fileName, loaderCallback, undefined); // third parameter is undefined - TODO_Ekki
+			this.loader.load(fileName, loaderCallback, undefined, onLoadError); // third parameter is undefined - TODO_Ekki
 		}
 		else if(metadata.format == 'gltf')
 		{
-			this.gltfloader.load(fileName, gltfCallback, null, null);
+			this.gltfloader.load(fileName, gltfCallback, null, onLoadError);
 		}
 		else if(metadata.format == 'obj')
 		{
-			this.objloader.load(fileName, objCallback, null, null);
+			this.objloader.load(fileName, objCallback, null, onLoadError);
 		}
 	}
 }

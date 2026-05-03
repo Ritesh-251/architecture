@@ -1,6 +1,22 @@
 // add items to the "Add Items" tab
 
 $(document).ready(function() {
+  function deriveCategory(item) {
+    var name = (item.name || '').toLowerCase();
+    if (item.type === "7" || item.type === "3" || name.indexOf('door') !== -1 || name.indexOf('window') !== -1 || name.indexOf('gate') !== -1) {
+      return 'doors';
+    }
+    if (item.type === "4" || name.indexOf('lamp') !== -1 || name.indexOf('light') !== -1 || name.indexOf('chandelier') !== -1) {
+      return 'lighting';
+    }
+    if (name.indexOf('kitchen') !== -1 || name.indexOf('fridge') !== -1 || name.indexOf('stove') !== -1 || name.indexOf('sink') !== -1 || name.indexOf('toaster') !== -1) {
+      return 'kitchen';
+    }
+    if (name.indexOf('bed') !== -1 || name.indexOf('wardrobe') !== -1 || name.indexOf('dresser') !== -1 || name.indexOf('nightstand') !== -1 || name.indexOf('bedside') !== -1) {
+      return 'bedroom';
+    }
+    return 'all';
+  }
   var items = [
    {
       "name" : "Closed Door",
@@ -14,6 +30,12 @@ $(document).ready(function() {
       "model" : "models/js/open_door.js",
       "type" : "7"
     }, 
+    {
+      "name" : "Main Gate",
+      "image" : "models/thumbnails/thumbnail_Screen_Shot_2014-10-27_at_8.04.12_PM.png",
+      "model" : "models/js/closed-door28x80_baked.js",
+      "type" : "7"
+    },
     {
       "name" : "Window",
       "image" : "models/thumbnails/thumbnail_window.png",
@@ -164,7 +186,13 @@ $(document).ready(function() {
         "model" : "models/js/Duck.gltf",
         "type" : "1",
         "format": "gltf",
-      }
+      },
+    {
+      "name" : "Ceiling Light",
+      "image" : "models/thumbnails/thumbnail_ore-white.png",
+      "model" : "models/js/ore-3legged-white_baked.js",
+      "type" : "4"
+    }
    /*     
    {
       "name" : "",
@@ -176,15 +204,16 @@ $(document).ready(function() {
   ]
 
 
-  var modelTypesNum = ["1","2","3","7","8","9"];
-  var modelTypesIds = ["floor-items", "wall-items", "in-wall-items", "in-wall-floor-items", "on-floor-items", "wall-floor-items"];
+  var modelTypesNum = ["1","2","3","4","7","8","9"];
+  var modelTypesIds = ["floor-items", "wall-items", "in-wall-items", "roof-items", "in-wall-floor-items", "on-floor-items", "wall-floor-items"];
   var itemsDiv = $("#items-wrapper");
   for (var i = 0; i < items.length; i++) 
   {
 	var item = items[i];
     itemsDiv = $("#"+modelTypesIds[modelTypesNum.indexOf(item.type)]+"-wrapper");
 	var modelformat = (item.format) ?' model-format="'+item.format+'"' : "";
-    var html = '<div class="col-sm-4">' + '<a class="thumbnail add-item"' +' model-name="'+ item.name +'"' +' model-url="' +item.model+'"' +' model-type="' +item.type+'"' + modelformat+'>'+'<img src="'+item.image +'" alt="Add Item"  data-dismiss="modal"> '+item.name +'</a></div>';
+    var category = deriveCategory(item);
+    var html = '<div class="col-sm-4 item-col">' + '<a class="thumbnail add-item"' +' data-item-name="'+ item.name.toLowerCase() +'" data-item-category="'+ category +'"' +' model-name="'+ item.name +'"' +' model-url="' +item.model+'"' +' model-type="' +item.type+'"' + modelformat+'>'+'<img src="'+item.image +'" alt="Add Item"  data-dismiss="modal"> '+item.name +'</a></div>';
     itemsDiv.append(html);
   }
 });

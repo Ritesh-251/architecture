@@ -101,7 +101,7 @@ export class Main extends EventDispatcher
 // scope.renderer = new WebGLRenderer({antialias: true, preserveDrawingBuffer:
 // true, alpha:true}); // preserveDrawingBuffer:true - required to support
 // .toDataURL()
-		var renderer = new WebGLRenderer({antialias: true, alpha:true});
+		var renderer = new WebGLRenderer({antialias: true, alpha: true, preserveDrawingBuffer: true});
 
 // scope.renderer.autoClear = false;
 		renderer.shadowMap.enabled = true;
@@ -110,7 +110,7 @@ export class Main extends EventDispatcher
 		renderer.setClearColor( 0xFFFFFF, 1 );
 		renderer.clippingPlanes = this.clippingEmpty;
 		renderer.localClippingEnabled = false;
-//		renderer.setPixelRatio(window.devicePixelRatio);
+		renderer.setPixelRatio(window.devicePixelRatio);
 // renderer.sortObjects = false;
 
 		return renderer;
