@@ -1,6 +1,6 @@
 /* global $ */
 /**
- * Architect3D — Backend API Integration
+ * Architecture Master — Backend API Integration
  * Handles auth, cloud save/load, and design management.
  */
 (function () {
@@ -18,13 +18,18 @@
 
   // ── Fetch wrapper ────────────────────────────────────────────────────────────
   function apiRequest(method, path, body) {
+    console.log('[a3d] apiRequest:', method, path);
     var opts = { method: method, headers: { 'Content-Type': 'application/json' } };
     var token = getToken();
     if (token) opts.headers['Authorization'] = 'Bearer ' + token;
     if (body) opts.body = JSON.stringify(body);
     return fetch(API_BASE + path, opts).then(function (res) {
+      console.log('[a3d] apiResponse status:', res.status);
       return res.json().then(function (data) {
-        if (!res.ok) throw new Error(data.message || 'Request failed');
+        if (!res.ok) {
+          console.error('[a3d] apiRequest failed:', data);
+          throw new Error(data.message || 'Request failed');
+        }
         return data;
       }).catch(function (err) {
         if (!res.ok) throw new Error('Request failed (' + res.status + ')');
@@ -214,8 +219,18 @@
   }
 
   function saveToCloud() {
-    if (!getToken()) { showToast('Please log in to save your design', 'error'); return; }
-    if (!_bp3d) return;
+    console.log('[a3d] saveToCloud called');
+    if (!getToken()) { 
+      console.warn('[a3d] No token found, prompting login');
+      showToast('Please log in to save your design', 'info'); 
+      $('#a3d-auth-modal').modal('show');
+      return; 
+    }
+    if (!_bp3d) {
+      console.error('[a3d] Engine reference (_bp3d) is missing!');
+      showToast('Engine not initialized correctly', 'error');
+      return;
+    }
 
     // For a new (unsaved) design, prompt for a name first
     if (!currentDesignId) {
@@ -231,10 +246,12 @@
 
   function performSave(name) {
     if (!_bp3d) return;
+    console.log('[a3d] performing save for:', name);
     var serialized;
     try {
       serialized = JSON.parse(_bp3d.model.exportSerialized());
     } catch (e) {
+      console.error('[a3d] serialization failed:', e);
       showToast('Could not read design data: ' + e.message, 'error');
       return;
     }
@@ -466,12 +483,22 @@
       }
     });
     // Logout click must close dropdown first
-    $('#a3d-logout-btn').on('click', function (e) {
-      e.stopPropagation();
-      $('#a3d-user-dropdown').hide();
-      doLogout();
+    // ── My Designs button ──
+    $('#a3d-my-designs-btn').on('click', function(e) {
+      e.preventDefault();
+      loadMyDesigns();
     });
+
+    // ── Auto-load if coming from dashboard ──
+    setTimeout(function() {
+      var autoLoadId = localStorage.getItem('a3d_design_id');
+      if (autoLoadId && _bp3d) {
+        localStorage.removeItem('a3d_design_id');
+        loadDesignById(autoLoadId);
+      }
+    }, 500);
   });
+
 
   // ── Public interface ─────────────────────────────────────────────────────────
   window.A3DApi = {
@@ -490,7 +517,10 @@
       }
     },
     markUnsaved: markUnsaved,
-    showToast: showToast
+    showToast: showToast,
+    cloudSave: saveToCloud,
+    loadDesign: loadDesignById
   };
+
 
 })();

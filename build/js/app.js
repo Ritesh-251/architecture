@@ -157,7 +157,7 @@ var mainControls = function (blueprint3d) {
 		// Auto-Save Logic
 		setInterval(function () {
 			var data = blueprint3d.model.exportSerialized();
-			localStorage.setItem('architect3d_autosave', data);
+			localStorage.setItem('architecture-master_autosave', data);
 		}, 5000);
 	}
 
@@ -839,22 +839,22 @@ $(document).ready(function () {
 	function setTheme(theme) {
 		var dark = theme === 'dark';
 		$('body').toggleClass('theme-dark', dark);
-		localStorage.setItem('architect3d-theme', dark ? 'dark' : 'light');
+		localStorage.setItem('architecture-master-theme', dark ? 'dark' : 'light');
 	}
 
 	function applySavedTheme() {
-		setTheme(localStorage.getItem('architect3d-theme') || 'light');
+		setTheme(localStorage.getItem('architecture-master-theme') || 'light');
 	}
 
 	function setAdvancedVisible(isVisible) {
 		$('#viewcontrols').toggleClass('advanced-hidden', !isVisible);
 		$('#showSwitchCameraMode').toggleClass('advanced-hidden', !isVisible);
 		$('#showSwitchWireframeMode').toggleClass('advanced-hidden', !isVisible);
-		localStorage.setItem('architect3d-advanced-ui', isVisible ? '1' : '0');
+		localStorage.setItem('architecture-master-advanced-ui', isVisible ? '1' : '0');
 	}
 
 	function applyAdvancedPreference() {
-		setAdvancedVisible(localStorage.getItem('architect3d-advanced-ui') === '1');
+		setAdvancedVisible(localStorage.getItem('architecture-master-advanced-ui') === '1');
 	}
 
 	function createRectRoom(floorplan, x1, y1, x2, y2) {
@@ -1094,7 +1094,7 @@ $(document).ready(function () {
 					drawImageProp(ctx, images[3], 1550, 570, 320, 460);
 				}
 
-				triggerDownload(collage.toDataURL('image/jpeg', 0.95), 'Architect3D-Presentation.jpg');
+				triggerDownload(collage.toDataURL('image/jpeg', 0.95), 'Architecture Master-Presentation.jpg');
 				notifyStatus('Presentation Downloaded successfully!', 2000);
 
 				// Restore view
@@ -1125,6 +1125,17 @@ $(document).ready(function () {
 		widget: false
 	}
 	blueprint3d = new BP3DJS.BlueprintJS(opts);
+
+	// Architecture Master — Cloud API Integration
+	if (window.A3DApi) {
+		window.A3DApi.setBP3DRef(blueprint3d);
+	}
+
+	// Sync design name from our toolbar to the local design name
+	$('#a3d-design-name').on('input', function() {
+		if (window.a3dDesignName) window.a3dDesignName = $(this).val();
+	});
+
 	applySavedTheme();
 	applyAdvancedPreference();
 	var viewerFloorplanner = new ViewerFloorplanner(blueprint3d);
@@ -1134,7 +1145,7 @@ $(document).ready(function () {
 
 	mainControls(blueprint3d);
 	// Load Auto-Save on start or fallback to myhome
-	var saved = localStorage.getItem('architect3d_autosave');
+	var saved = localStorage.getItem('architecture-master_autosave');
 	if (saved) {
 		blueprint3d.model.loadSerialized(saved);
 	} else {

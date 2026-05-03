@@ -32,11 +32,19 @@ export class Scene extends EventDispatcher
 		this.needsUpdate = false;
 		// init item loader
 		this.loader = new JSONLoader();
-		this.loader.setCrossOrigin('');
+		if (this.loader.setCrossOrigin) {
+			this.loader.setCrossOrigin('');
+		} else {
+			this.loader.crossOrigin = '';
+		}
 
 		this.gltfloader = new GLTFLoader();
 		this.objloader = new OBJLoader();
-		this.gltfloader.setCrossOrigin('');
+		if (this.gltfloader.setCrossOrigin) {
+			this.gltfloader.setCrossOrigin('');
+		} else {
+			this.gltfloader.crossOrigin = '';
+		}
 
 		this.itemLoadingCallbacks = null;
 		this.itemLoadedCallbacks = null;

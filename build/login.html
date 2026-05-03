@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Architecture Master</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+<div id="a3d-toasts"></div>
+
+<div class="auth-card">
+  <a href="landing.html" class="auth-logo">
+    <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+      <rect x="2" y="2" width="11" height="11" rx="2" fill="#6C63FF" opacity="0.9"/>
+      <rect x="15" y="2" width="11" height="11" rx="2" fill="#6C63FF" opacity="0.5"/>
+      <rect x="2" y="15" width="11" height="11" rx="2" fill="#6C63FF" opacity="0.5"/>
+      <rect x="15" y="15" width="11" height="11" rx="2" fill="#00C9A7" opacity="0.9"/>
+    </svg>
+    Architecture Master
+  </a>
+
+  <div class="auth-tabs">
+    <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign in</button>
+    <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Create account</button>
+  </div>
+
+  <!-- Login Panel -->
+  <div class="auth-form-panel active" id="panelLogin">
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="login-email" class="form-input" placeholder="you@example.com" autocomplete="email">
+      <div class="field-error" id="err-login-email"></div>
+    </div>
+    <div class="form-group">
+      <label>
+        Password
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </label>
+      <div class="password-wrapper">
+        <input type="password" id="login-password" class="form-input" placeholder="••••••••" autocomplete="current-password">
+        <button class="password-toggle" onclick="togglePw('login-password', this)" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <div class="field-error" id="err-login-password"></div>
+    </div>
+    <button class="auth-submit" id="loginBtn" onclick="doLogin()">
+      <span id="loginBtnText">Sign in</span>
+    </button>
+    <p class="auth-footer-text">Don't have an account? <a href="#" onclick="switchTab('register')">Create one free</a></p>
+  </div>
+
+  <!-- Register Panel -->
+  <div class="auth-form-panel" id="panelRegister">
+    <div class="form-group">
+      <label>Full name</label>
+      <input type="text" id="reg-name" class="form-input" placeholder="Your Name" autocomplete="name">
+      <div class="field-error" id="err-reg-name"></div>
+    </div>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="reg-email" class="form-input" placeholder="you@example.com" autocomplete="email">
+      <div class="field-error" id="err-reg-email"></div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="reg-password" class="form-input" placeholder="••••••••" oninput="updateStrength(this.value)" autocomplete="new-password">
+        <button class="password-toggle" onclick="togglePw('reg-password', this)" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <div class="pw-strength">
+        <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwBar"></div></div>
+        <div class="pw-strength-label" id="pwLabel">Enter a password</div>
+      </div>
+      <div class="field-error" id="err-reg-password"></div>
+    </div>
+    <button class="auth-submit" id="registerBtn" onclick="doRegister()">
+      <span id="registerBtnText">Create account</span>
+    </button>
+    <p class="auth-footer-text">Already have an account? <a href="#" onclick="switchTab('login')">Sign in</a></p>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:3003/api';
+
+function switchTab(tab) {
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('panelRegister').classList.toggle('active', tab === 'register');
+  clearErrors();
+}
+
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach(el => { el.textContent = ''; el.classList.remove('show'); });
+  document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.classList.add('show'); }
+  const input = el && el.previousElementSibling;
+  if (input && input.classList.contains('form-input')) input.classList.add('error');
+}
+
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function updateStrength(pw) {
+  const bar = document.getElementById('pwBar');
+  const label = document.getElementById('pwLabel');
+  let score = 0;
+  if (pw.length >= 3) score++;
+  if (pw.length >= 8) score++;
+  if (/[^a-zA-Z0-9\s]/.test(pw)) score++;
+  if (/[A-Z]/.test(pw) && /[0-9]/.test(pw)) score++;
+  const levels = [
+    { w: '0%', c: 'transparent', t: 'Enter a password' },
+    { w: '25%', c: '#FF5A5F', t: 'Weak' },
+    { w: '50%', c: '#F59E0B', t: 'Fair' },
+    { w: '75%', c: '#6C63FF', t: 'Strong' },
+    { w: '100%', c: '#00C9A7', t: 'Very strong' },
+  ];
+  const lvl = levels[score];
+  bar.style.width = lvl.w; bar.style.background = lvl.c; label.textContent = lvl.t;
+  label.style.color = lvl.c;
+}
+
+function toast(msg, type='info') {
+  const icons = { success:'✓', error:'✗', info:'ℹ', warning:'⚠' };
+  const c = document.getElementById('a3d-toasts');
+  const t = document.createElement('div');
+  t.className = `a3d-toast ${type}`;
+  t.innerHTML = `<span class="a3d-toast-icon">${icons[type]||'ℹ'}</span><span>${msg}</span><button class="a3d-toast-close" onclick="this.parentElement.remove()">×</button>`;
+  c.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3000);
+}
+
+async function doLogin() {
+  clearErrors();
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  let ok = true;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showError('err-login-email', 'Enter a valid email'); ok = false; }
+  if (!pass) { showError('err-login-password', 'Password is required'); ok = false; }
+  if (!ok) return;
+  const btn = document.getElementById('loginBtn');
+  document.getElementById('loginBtnText').textContent = 'Signing in…';
+  btn.disabled = true;
+  try {
+    const res = await fetch(API + '/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password: pass}) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Login failed');
+    localStorage.setItem('a3d_token', data.token);
+    localStorage.setItem('a3d_user', JSON.stringify({_id:data._id, name:data.name, email:data.email}));
+    toast('Welcome back, ' + data.name + '!', 'success');
+    setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    document.getElementById('loginBtnText').textContent = 'Sign in';
+    btn.disabled = false;
+  }
+}
+
+async function doRegister() {
+  clearErrors();
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-password').value;
+  let ok = true;
+  if (!name) { showError('err-reg-name', 'Name is required'); ok = false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showError('err-reg-email', 'Enter a valid email'); ok = false; }
+  if (!pass || pass.length < 3) { showError('err-reg-password', 'Password must be at least 3 characters'); ok = false; }
+  else if (!/[^a-zA-Z0-9\s]/.test(pass)) { showError('err-reg-password', 'Password must contain a symbol'); ok = false; }
+  if (!ok) return;
+  const btn = document.getElementById('registerBtn');
+  document.getElementById('registerBtnText').textContent = 'Creating account…';
+  btn.disabled = true;
+  try {
+    const res = await fetch(API + '/auth/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, email, password: pass}) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Registration failed');
+    localStorage.setItem('a3d_token', data.token);
+    localStorage.setItem('a3d_user', JSON.stringify({_id:data._id, name:data.name, email:data.email}));
+    toast('Welcome, ' + data.name + '!', 'success');
+    setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    document.getElementById('registerBtnText').textContent = 'Create account';
+    btn.disabled = false;
+  }
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (document.getElementById('panelLogin').classList.contains('active')) doLogin();
+    else doRegister();
+  }
+});
+
+// Redirect if already logged in
+if (localStorage.getItem('a3d_token')) window.location.href = 'dashboard.html';
+
+// Handle register.html redirect
+if (localStorage.getItem('a3d_open_tab') === 'register') {
+  localStorage.removeItem('a3d_open_tab');
+  switchTab('register');
+}
+</script>
+</body>
+</html>

@@ -119,4 +119,68 @@ router.delete('/:id', protect, async (req, res) => {
   }
 });
 
+// POST /api/designs/:id/duplicate — clone a design
+router.post('/:id/duplicate', protect, async (req, res) => {
+  try {
+    const design = await Design.findOne({ _id: req.params.id, user: req.userId });
+    if (!design) return res.status(404).json({ message: 'Design not found' });
+    const clone = await Design.create({
+      user: req.userId,
+      name: design.name + ' (Copy)',
+      thumbnail: design.thumbnail,
+      floorplan: design.floorplan,
+      items: design.items,
+      floorCount: design.floorCount,
+    });
+    res.status(201).json(clone);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// PUT /api/designs/:id/share — generate public share link
+router.put('/:id/share', protect, async (req, res) => {
+  try {
+    const { randomUUID } = require('crypto');
+    const token = randomUUID();
+    const design = await Design.findOneAndUpdate(
+      { _id: req.params.id, user: req.userId },
+      { isPublic: true, shareToken: token },
+      { new: true }
+    );
+    if (!design) return res.status(404).json({ message: 'Design not found' });
+    res.json({ shareToken: design.shareToken, isPublic: design.isPublic });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+// DELETE /api/designs/:id/share — revoke public link
+router.delete('/:id/share', protect, async (req, res) => {
+  try {
+    const design = await Design.findOneAndUpdate(
+      { _id: req.params.id, user: req.userId },
+      { isPublic: false, shareToken: null },
+      { new: true }
+    );
+    if (!design) return res.status(404).json({ message: 'Design not found' });
+    res.json({ message: 'Share link revoked' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET /api/designs/public/:shareToken — read-only public view
+router.get('/public/:shareToken', async (req, res) => {
+  try {
+    const design = await Design.findOne({ shareToken: req.params.shareToken, isPublic: true });
+    if (!design) return res.status(404).json({ message: 'Design not found or link revoked' });
+    res.json(design);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
+

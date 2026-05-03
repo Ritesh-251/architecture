@@ -1,4 +1,11 @@
 node_modules/
+backend/node_modules/
+.env
+backend/.env
+.DS_Store
+*.log
 gitpush.sh~
 /.babelrc~
 *.blend1
+dist/
+build/js/app.js.map

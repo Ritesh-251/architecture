@@ -4,10 +4,12 @@
   "description": "This is the core framework of architect3d for creating floorplans in 2d and 3d",
   "main": "build/js/bp3djs.js",
   "scripts": {
+    "start": "bash start.sh",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "reload": "livereload 'build/'",
     "test": "echo \"Error: no test specified\" && exit 1",
+
     "watch": "npm-run-all --parallel reload dev",
     "docs": "esdoc"
   },
