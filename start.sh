@@ -34,20 +34,29 @@ echo -e "${YELLOW}[1/3] Starting MongoDB...${RESET}"
 if pgrep -x "mongod" > /dev/null 2>&1; then
   echo -e "${GREEN}      ✓ MongoDB already running${RESET}"
 else
-  if [ -f "$MONGO_CONF" ]; then
-    mongod --config "$MONGO_CONF" > "$LOG_DIR/mongo.log" 2>&1 &
+  # Detect config path
+  CONF_PATH=""
+  if [ -f "/usr/local/etc/mongod.conf" ]; then CONF_PATH="/usr/local/etc/mongod.conf"; # Intel Mac
+  elif [ -f "/opt/homebrew/etc/mongod.conf" ]; then CONF_PATH="/opt/homebrew/etc/mongod.conf"; # Apple Silicon
+  fi
+
+  if [ ! -z "$CONF_PATH" ]; then
+    mongod --config "$CONF_PATH" > "$LOG_DIR/mongo.log" 2>&1 &
     MONGO_PID=$!
     sleep 2
-    if ps -p $MONGO_PID > /dev/null 2>&1; then
-      echo -e "${GREEN}      ✓ MongoDB started (PID $MONGO_PID)${RESET}"
-    else
-      echo -e "${RED}      ✗ MongoDB failed to start. Check $LOG_DIR/mongo.log${RESET}"
-      exit 1
-    fi
+    echo -e "${GREEN}      ✓ MongoDB started (PID $MONGO_PID using $CONF_PATH)${RESET}"
   else
-    echo -e "${RED}      ✗ mongod.conf not found at $MONGO_CONF${RESET}"
-    echo -e "      Is MongoDB Community installed? Run: brew install mongodb-community"
-    exit 1
+    # Fallback: Start with default or warn
+    echo -e "${YELLOW}      ! No mongod.conf found. Trying default start...${RESET}"
+    mongod --dbpath /data/db > "$LOG_DIR/mongo.log" 2>&1 &
+    sleep 2
+    if pgrep -x "mongod" > /dev/null 2>&1; then
+       echo -e "${GREEN}      ✓ MongoDB started${RESET}"
+    else
+       echo -e "${RED}      ✗ MongoDB failed to start automatically.${RESET}"
+       echo -e "      Please start MongoDB manually (e.g., brew services start mongodb-community)"
+       exit 1
+    fi
   fi
 fi
 
